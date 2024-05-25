@@ -1,14 +1,14 @@
 import { Delete, Edit } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 
-export function EditButton(){
+export function EditButton(props: ButtonProps){
     return(
-        <Button size='small' variant='contained' startIcon={<Edit/>}>Editar</Button>
+        <Button {...props} size='small' variant='contained' startIcon={<Edit/>}>Editar</Button>
     )
 }
 
-export function DeleteButton(){
+export function DeleteButton(props: ButtonProps){
     return(
-        <Button size='small' variant='contained' color='error' startIcon={<Delete/>}>Eliminar</Button>
+        <Button {...props} size='small' variant='contained' color='error' startIcon={<Delete/>}>Eliminar</Button>
     )
 }
