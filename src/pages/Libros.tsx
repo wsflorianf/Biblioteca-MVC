@@ -1,9 +1,5 @@
 import { Alert, Button, Snackbar, Typography } from '@mui/material'
-import {
-  GridActionsCellItem,
-  GridColDef,
-  GridRowId,
-} from '@mui/x-data-grid'
+import { GridColDef, GridRowId } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
 import { Libro, LibroDetalle } from '../types/models.types'
 import {
@@ -99,7 +95,7 @@ export default function Libros() {
       align: 'center',
       headerAlign: 'center',
       disableColumnMenu: true,
-      ...copPrice
+      ...copPrice,
     },
     {
       field: 'nombre_autor',
@@ -134,27 +130,23 @@ export default function Libros() {
       type: 'actions',
       headerName: 'Operaciones',
       flex: 1,
-      getActions: ({ id, row }: { id: GridRowId, row: LibroDetalle }) => {
+      getActions: ({ id, row }: { id: GridRowId; row: LibroDetalle }) => {
         return [
-          <GridActionsCellItem
-          icon={<EditButton/>}
-            label='Editar'
+          <EditButton
             onClick={async () => {
               setActualLibro(await getLibro(id.toString()))
               setEditOpen(true)
             }}
           />,
-          <GridActionsCellItem
-          icon={<DeleteButton/>}
-            label='Borrar'
-            onClick={() => {
-              confirm({description: `¿Desea eliminar el libro "${row.nombre_libro}"?`})
-                .then(() => {
-                  deleteThisLibro(id.toString())
-                })
-                .catch()
-            }}
-          />,
+          <DeleteButton onClick={() => {
+            confirm({
+              description: `¿Desea eliminar el libro "${row.nombre_libro}"?`,
+            })
+              .then(() => {
+                deleteThisLibro(id.toString())
+              })
+              .catch()
+          }}/>
         ]
       },
     },
@@ -181,18 +173,22 @@ export default function Libros() {
           columns={columns}
           rows={libros}
           autoHeight
-          getRowId={(row) => row.codigo_libro}  
+          getRowId={(row) => row.codigo_libro}
           loading={loading}
           density='comfortable'
           getRowHeight={() => 'auto'}
-          getCellClassName={()=>'cell-theme'}
-          getRowClassName={(params)=>params.indexRelativeToCurrentPage % 2 === 0 ? 'theme-even' : 'theme-odd'}
+          getCellClassName={() => 'cell-theme'}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0
+              ? 'theme-even'
+              : 'theme-odd'
+          }
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
             },
             sorting: {
-              sortModel: [{field: 'codigo_libro', sort: 'asc'}]
+              sortModel: [{ field: 'codigo_libro', sort: 'asc' }],
             },
           }}
           pageSizeOptions={[5, 10]}

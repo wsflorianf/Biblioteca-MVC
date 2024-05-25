@@ -1,5 +1,5 @@
 import { Alert, Button, Snackbar, Typography } from '@mui/material'
-import { GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-data-grid'
+import { GridColDef, GridRowId } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
 import { Editorial } from '../types/models.types'
 import { BarOptionsTypes } from '../types/components.types'
@@ -101,19 +101,17 @@ export default function Editoriales() {
       flex: 1,
       getActions: ({ id, row }: { id: GridRowId; row: Editorial }) => {
         return [
-          <GridActionsCellItem
-            icon={<EditButton />}
-            label='Editar'
+          <EditButton
             onClick={() => {
               setActualEditorial(row)
               setEditOpen(true)
             }}
           />,
-          <GridActionsCellItem
-            icon={<DeleteButton />}
-            label='Borrar'
+          <DeleteButton
             onClick={() => {
-              confirm({description: `¿Desea eliminar la editorial "${row.nombre_editorial}"?`})
+              confirm({
+                description: `¿Desea eliminar la editorial "${row.nombre_editorial}"?`,
+              })
                 .then(() => {
                   deleteThisEditorial(id.toString())
                 })

@@ -1,9 +1,5 @@
 import { Alert, Button, Snackbar, Typography } from '@mui/material'
-import {
-  GridActionsCellItem,
-  GridColDef,
-  GridRowId,
-} from '@mui/x-data-grid'
+import { GridColDef, GridRowId } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
 import { Autor } from '../types/models.types'
 import { deleteAutor, getAutores } from '../services/autorService'
@@ -33,14 +29,14 @@ export default function Autores() {
     const fetchAutores = async () => {
       try {
         const autores = await getAutores()
-        setAutores(autores) 
+        setAutores(autores)
       } catch (error) {
         setBarOptions({
           open: true,
           message: 'Conexión rechazada',
           color: 'error',
         })
-      }finally {
+      } finally {
         setLoading(false)
       }
     }
@@ -91,20 +87,17 @@ export default function Autores() {
       flex: 0.8,
       getActions: ({ id, row }: { id: GridRowId; row: Autor }) => {
         return [
-          <GridActionsCellItem
-            icon={<EditButton/>}
-            label='Editar'
-            
+          <EditButton
             onClick={() => {
               setActualAutor(row)
               setEditOpen(true)
             }}
           />,
-          <GridActionsCellItem
-            icon={<DeleteButton/>}
-            label='Borrar'
+          <DeleteButton
             onClick={() => {
-              confirm({description: `¿Desea eliminar la editorial "${row.nombre_autor}"?`})
+              confirm({
+                description: `¿Desea eliminar la editorial "${row.nombre_autor}"?`,
+              })
                 .then(() => {
                   deleteThisAutor(id.toString())
                 })
@@ -133,23 +126,28 @@ export default function Autores() {
           margin: '10px',
         }}
       >
-        
         <StyledDataGrid
           columns={columns}
           rows={autores}
           getRowHeight={() => 'auto'}
-          autoHeight         
-          getRowId={(row)=>{return row.codigo_autor}} 
+          autoHeight
+          getRowId={(row) => {
+            return row.codigo_autor
+          }}
           loading={loading}
-          getCellClassName={()=>'cell-theme'}
-          getRowClassName={(params)=>params.indexRelativeToCurrentPage % 2 === 0 ? 'theme-even' : 'theme-odd'}
+          getCellClassName={() => 'cell-theme'}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0
+              ? 'theme-even'
+              : 'theme-odd'
+          }
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
             },
-            sorting:{
-              sortModel: [{field: 'codigo_autor', sort: 'asc'}]
-            }
+            sorting: {
+              sortModel: [{ field: 'codigo_autor', sort: 'asc' }],
+            },
           }}
           pageSizeOptions={[5, 10]}
         />

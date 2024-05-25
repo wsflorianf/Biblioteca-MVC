@@ -1,9 +1,5 @@
 import { Alert, Button, Snackbar, Typography } from '@mui/material'
-import {
-  GridActionsCellItem,
-  GridColDef,
-  GridRowId,
-} from '@mui/x-data-grid'
+import { GridColDef, GridRowId } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
 import { Genero } from '../types/models.types'
 import { BarOptionsTypes } from '../types/components.types'
@@ -33,14 +29,14 @@ export default function Generos() {
     const fetchGeneros = async () => {
       try {
         const generos = await getGeneros()
-        setGeneros(generos) 
+        setGeneros(generos)
       } catch (error) {
         setBarOptions({
           open: true,
           message: 'Conexión rechazada',
           color: 'error',
         })
-      }finally {
+      } finally {
         setLoading(false)
       }
     }
@@ -91,19 +87,17 @@ export default function Generos() {
       flex: 1,
       getActions: ({ id, row }: { id: GridRowId; row: Genero }) => {
         return [
-          <GridActionsCellItem
-          icon={<EditButton/>}
-            label='Editar'
+          <EditButton
             onClick={() => {
               setActualGenero(row)
               setEditOpen(true)
             }}
           />,
-          <GridActionsCellItem
-          icon={<DeleteButton/>}
-            label='Borrar'
+          <DeleteButton
             onClick={() => {
-              confirm({description: `¿Desea eliminar el genero "${row.nombre_genero}"?`})
+              confirm({
+                description: `¿Desea eliminar el genero "${row.nombre_genero}"?`,
+              })
                 .then(() => {
                   deleteThisGenero(Number(id.toString()))
                 })
@@ -139,15 +133,19 @@ export default function Generos() {
           getRowId={(row) => row.id_genero}
           loading={loading}
           getRowHeight={() => 'auto'}
-          getCellClassName={()=>'cell-theme'}
-          getRowClassName={(params)=>params.indexRelativeToCurrentPage % 2 === 0 ? 'theme-even' : 'theme-odd'}
+          getCellClassName={() => 'cell-theme'}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0
+              ? 'theme-even'
+              : 'theme-odd'
+          }
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
             },
-            sorting:{
-              sortModel: [{field: 'id_genero', sort: 'asc'}]
-            }
+            sorting: {
+              sortModel: [{ field: 'id_genero', sort: 'asc' }],
+            },
           }}
           pageSizeOptions={[5, 10]}
         />
