@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model autores {
+  codigo_autor  String @id @db.VarChar(6)
+  nombre_autor String @db.VarChar(50)
+  nacionalidad String @db.VarChar(50)
+  libros libros[]
+}
+
+model generos {
+  id_genero Int @id @default(autoincrement())
+  nombre_genero String @db.VarChar(40)
+  descripcion String @db.VarChar(100)
+  libros libros[]
+}
+
+model editoriales {
+  codigo_editorial String @id @db.VarChar(6)
+  nombre_editorial String @db.VarChar(30)
+  contacto String @db.VarChar(30)
+  telefono String @db.VarChar(9)
+  libros libros[]
+}
+
+model libros {
+  codigo_libro String @id @db.VarChar(9)
+  nombre_libro String @db.VarChar(50)
+  existencias Int
+  precio Decimal @db.Decimal(10,2)
+  autor autores @relation(fields: [codigo_autor], references: [codigo_autor])
+  codigo_autor  String @db.VarChar(6)
+  editorial editoriales @relation(fields: [codigo_editorial], references: [codigo_editorial])
+  codigo_editorial String @db.VarChar(6)
+  genero generos @relation(fields: [id_genero], references: [id_genero])
+  id_genero Int
+  descripcion String @db.Text
+}
