@@ -1,9 +1,5 @@
 import { Alert, Button, Snackbar, Typography } from '@mui/material'
-import {
-  GridActionsCellItem,
-  GridColDef,
-  GridRowId,
-} from '@mui/x-data-grid'
+import { GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
 import { Editorial } from '../types/models.types'
 import { BarOptionsTypes } from '../types/components.types'
@@ -14,6 +10,7 @@ import { ResponseEditorial } from '../types/response.types'
 import EditEditorialDialog from '../components/EditEditorialDialog'
 import { DeleteButton, EditButton } from '../styled-components/Buttons'
 import StyledDataGrid from '../styled-components/StyledDataGrid'
+import { confirm } from 'material-ui-confirm'
 
 export default function Editoriales() {
   const [editoriales, setEditoriales] = useState<Editorial[]>([])
@@ -39,7 +36,7 @@ export default function Editoriales() {
           message: 'Conexión rechazada',
           color: 'error',
         })
-      }finally {
+      } finally {
         setLoading(false)
       }
     }
@@ -105,7 +102,7 @@ export default function Editoriales() {
       getActions: ({ id, row }: { id: GridRowId; row: Editorial }) => {
         return [
           <GridActionsCellItem
-          icon={<EditButton/>}
+            icon={<EditButton />}
             label='Editar'
             onClick={() => {
               setActualEditorial(row)
@@ -113,10 +110,14 @@ export default function Editoriales() {
             }}
           />,
           <GridActionsCellItem
-          icon={<DeleteButton/>}
+            icon={<DeleteButton />}
             label='Borrar'
             onClick={() => {
-              if(window.confirm(`¿Desea borrar la editorial ${id}?`))deleteThisEditorial(id.toString())
+              confirm({description: `¿Desea eliminar la editorial "${row.nombre_editorial}"?`})
+                .then(() => {
+                  deleteThisEditorial(id.toString())
+                })
+                .catch()
             }}
           />,
         ]
@@ -148,15 +149,19 @@ export default function Editoriales() {
           getRowId={(row) => row.codigo_editorial}
           loading={loading}
           getRowHeight={() => 'auto'}
-          getCellClassName={()=>'cell-theme'}
-          getRowClassName={(params)=>params.indexRelativeToCurrentPage % 2 === 0 ? 'theme-even' : 'theme-odd'}
+          getCellClassName={() => 'cell-theme'}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0
+              ? 'theme-even'
+              : 'theme-odd'
+          }
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
             },
-            sorting:{
-              sortModel: [{field: 'codigo_editorial', sort: 'asc'}] 
-            }
+            sorting: {
+              sortModel: [{ field: 'codigo_editorial', sort: 'asc' }],
+            },
           }}
           pageSizeOptions={[5, 10]}
         />

@@ -14,6 +14,7 @@ import { ResponseAutor } from '../types/response.types'
 import EditAutorDialog from '../components/EditAutorDialog'
 import StyledDataGrid from '../styled-components/StyledDataGrid'
 import { DeleteButton, EditButton } from '../styled-components/Buttons'
+import { confirm } from 'material-ui-confirm'
 
 export default function Autores() {
   const [autores, setAutores] = useState<Autor[]>([])
@@ -103,7 +104,11 @@ export default function Autores() {
             icon={<DeleteButton/>}
             label='Borrar'
             onClick={() => {
-              if(window.confirm(`¿Desea borrar la editorial ${id}?`))deleteThisAutor(id.toString())
+              confirm({description: `¿Desea eliminar la editorial "${row.nombre_autor}"?`})
+                .then(() => {
+                  deleteThisAutor(id.toString())
+                })
+                .catch()
             }}
           />,
         ]

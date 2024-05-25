@@ -19,6 +19,7 @@ import EditLibroDialog from '../components/EditLibroDialog'
 import { copPrice } from '../utils/priceFormat'
 import { DeleteButton, EditButton } from '../styled-components/Buttons'
 import StyledDataGrid from '../styled-components/StyledDataGrid'
+import { confirm } from 'material-ui-confirm'
 
 export default function Libros() {
   const [libros, setLibros] = useState<LibroDetalle[]>([])
@@ -133,7 +134,7 @@ export default function Libros() {
       type: 'actions',
       headerName: 'Operaciones',
       flex: 1,
-      getActions: ({ id }: { id: GridRowId }) => {
+      getActions: ({ id, row }: { id: GridRowId, row: LibroDetalle }) => {
         return [
           <GridActionsCellItem
           icon={<EditButton/>}
@@ -147,7 +148,11 @@ export default function Libros() {
           icon={<DeleteButton/>}
             label='Borrar'
             onClick={() => {
-              if(window.confirm(`¿Desea borrar la editorial ${id}?`))deleteThisLibro(id.toString())
+              confirm({description: `¿Desea eliminar el libro "${row.nombre_libro}"?`})
+                .then(() => {
+                  deleteThisLibro(id.toString())
+                })
+                .catch()
             }}
           />,
         ]

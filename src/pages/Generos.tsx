@@ -14,6 +14,7 @@ import EditGeneroDialog from '../components/EditGeneroDialog'
 import { ResponseGenero } from '../types/response.types'
 import { DeleteButton, EditButton } from '../styled-components/Buttons'
 import StyledDataGrid from '../styled-components/StyledDataGrid'
+import { confirm } from 'material-ui-confirm'
 
 export default function Generos() {
   const [generos, setGeneros] = useState<Genero[]>([])
@@ -102,7 +103,11 @@ export default function Generos() {
           icon={<DeleteButton/>}
             label='Borrar'
             onClick={() => {
-              if(window.confirm(`¿Desea borrar la editorial ${id}?`))deleteThisGenero(parseInt(id.toString()))
+              confirm({description: `¿Desea eliminar el genero "${row.nombre_genero}"?`})
+                .then(() => {
+                  deleteThisGenero(Number(id.toString()))
+                })
+                .catch()
             }}
           />,
         ]
