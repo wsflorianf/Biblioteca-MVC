@@ -116,7 +116,7 @@ export default function Editoriales() {
           icon={<DeleteButton/>}
             label='Borrar'
             onClick={() => {
-              deleteThisEditorial(id.toString())
+              if(window.confirm(`¿Desea borrar la editorial ${id}?`))deleteThisEditorial(id.toString())
             }}
           />,
         ]

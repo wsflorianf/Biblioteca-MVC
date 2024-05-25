@@ -103,7 +103,7 @@ export default function Autores() {
             icon={<DeleteButton/>}
             label='Borrar'
             onClick={() => {
-              deleteThisAutor(id.toString())
+              if(window.confirm(`¿Desea borrar la editorial ${id}?`))deleteThisAutor(id.toString())
             }}
           />,
         ]

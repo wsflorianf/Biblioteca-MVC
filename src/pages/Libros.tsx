@@ -147,7 +147,7 @@ export default function Libros() {
           icon={<DeleteButton/>}
             label='Borrar'
             onClick={() => {
-              deleteThisLibro(id.toString())
+              if(window.confirm(`¿Desea borrar la editorial ${id}?`))deleteThisLibro(id.toString())
             }}
           />,
         ]

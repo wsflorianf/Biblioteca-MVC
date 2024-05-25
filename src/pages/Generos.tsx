@@ -102,7 +102,7 @@ export default function Generos() {
           icon={<DeleteButton/>}
             label='Borrar'
             onClick={() => {
-              deleteThisGenero(parseInt(id.toString()))
+              if(window.confirm(`¿Desea borrar la editorial ${id}?`))deleteThisGenero(parseInt(id.toString()))
             }}
           />,
         ]
