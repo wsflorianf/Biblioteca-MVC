@@ -15,6 +15,7 @@ router.get('/generos', async (req, res) => {
 router.post('/generos', async (req, res) =>{
     try {
         req.body.id_genero = Number(req.body.id_genero)
+        if(req.body.id_genero===0)req.body.id_genero=undefined
         const genero = await insertarGenero(req.body)
         res.json({...genero, message: 'Genero creado con éxito'})
     } catch (error) {
