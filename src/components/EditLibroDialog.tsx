@@ -145,7 +145,7 @@ import {
               defaultValue={libro?.existencias}
               {...register('existencias', {
                 required: true,
-                minLength: {
+                min: {
                   value: 0,
                   message: 'Cantidad no válida',
                 },
@@ -164,7 +164,7 @@ import {
               }}
               {...register('precio', {
                 required: true,
-                minLength: {
+                min: {
                   value: 0,
                   message: 'Cantidad no válida',
                 },

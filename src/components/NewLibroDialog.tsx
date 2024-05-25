@@ -136,7 +136,7 @@ export default function NewLibroDialog({
             type='number'
             {...register('existencias', {
               required: true,
-              minLength: {
+              min: {
                 value: 0,
                 message: 'Cantidad no válida',
               },
@@ -154,7 +154,7 @@ export default function NewLibroDialog({
             }}
             {...register('precio', {
               required: true,
-              minLength: {
+              min: {
                 value: 0,
                 message: 'Cantidad no válida',
               },
