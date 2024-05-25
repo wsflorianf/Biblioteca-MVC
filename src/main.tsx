@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Editoriales from './pages/Editoriales.tsx'
 import Autores from './pages/Autores.tsx'
 import Generos from './pages/Generos.tsx'
@@ -9,88 +9,85 @@ import Libros from './pages/Libros.tsx'
 import ErrorPage from './pages/ErrorPage.tsx'
 import Inicio from './pages/Inicio.tsx'
 import { createTheme, ThemeProvider } from '@mui/material'
-import {esES} from '@mui/x-data-grid/locales'
-
-
+import { esES } from '@mui/x-data-grid/locales'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: '/',
-        element: <Inicio/>
+        element: <Inicio />,
       },
       {
         path: 'autores',
-        element: <Autores/>
+        element: <Autores />,
       },
       {
         path: 'editoriales',
-        element: <Editoriales/>
+        element: <Editoriales />,
       },
       {
         path: 'generos',
-        element: <Generos/>
+        element: <Generos />,
       },
       {
         path: 'libros',
-        element: <Libros/>
+        element: <Libros />,
       },
       {
         path: '*',
-        element: <ErrorPage/>
-      }
+        element: <ErrorPage />,
+      },
     ],
   },
 ])
 
-const theme = createTheme({
-  
-  components: {
-    MuiCard:{
-      styleOverrides:{
-        root:{
-          border: '1px solid #4976b8',
-          transition: '0.2s all'
+const theme = createTheme(
+  {
+    components: {
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            border: '1px solid #4976b8',
+            transition: '0.2s all',
+          },
         },
-
       },
-    }
-    ,
-    MuiCardActions:{
-      styleOverrides: {
-        root: {
-          display: 'flex',
-          justifyContent: 'space-between',
-          color: '#4976b8',
-          padding: '10px 20px'
-        }
-      }
+      MuiCardActions: {
+        styleOverrides: {
+          root: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            color: '#4976b8',
+            padding: '10px 20px',
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: 'none',
+          },
+        },
+      },
+      MuiDialogActions: {
+        styleOverrides: {
+          root: {
+            padding: '0 24px',
+          },
+        },
+      },
     },
-    MuiButton: {
-      styleOverrides:{
-        root:{
-          textTransform: 'none',
-        }
-      }
-    },
-    MuiDialogActions: {
-      styleOverrides:{
-        root: {
-          padding: '0 24px',
-        }
-      }
-    },
-  }  
-}, esES)
-
+  },
+  esES
+)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </ThemeProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
