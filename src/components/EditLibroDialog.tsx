@@ -183,6 +183,7 @@ import {
                   required: true,
                 })}
               >
+                <MenuItem sx={{display: 'none'}} value={libro?.codigo_autor}></MenuItem>
                 {autores.map((autor) => {
                   return (
                     <MenuItem key={autor.codigo_autor} value={autor.codigo_autor}>
@@ -204,6 +205,7 @@ import {
                   required: true,
                 })}
               >
+                <MenuItem sx={{display: 'none'}} value={libro?.codigo_editorial}/>
                 {editoriales.map((editorial) => {
                   return (
                     <MenuItem key={editorial.codigo_editorial} value={editorial.codigo_editorial}>
@@ -218,12 +220,13 @@ import {
               <Select
                 required
                 variant='filled'
-                defaultValue={libro?.id_genero}
                 label='Genero'
+                defaultValue={libro?.id_genero}
                 {...register('id_genero', {
                   required: true,
                 })}
               >
+                <MenuItem sx={{display: 'none'}} value={libro?.id_genero}/>
                 {generos.map((genero) => {
                   return (
                     <MenuItem key={genero.id_genero} value={genero.id_genero}>
